@@ -4,12 +4,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
- * Initializing a ReadDictionary reads the text file to put all String value into an ArrayList
+ * Initializing a ReadDictionary reads the text file to put all String value
+ * into an ArrayList in ascending String length.
  * Created by marvindo on 9/15/17.
  */
-public class ReadDictionary {
+class ReadDictionary {
 
     private String path;
     private ArrayList<String> dictionary;
@@ -23,6 +25,8 @@ public class ReadDictionary {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        // Override String compare method to sort ArrayList
+        Collections.sort(dictionary, (o1, o2) -> Integer.compare(o1.length(), o2.length()));
     }
 
     private void openFile() throws IOException {

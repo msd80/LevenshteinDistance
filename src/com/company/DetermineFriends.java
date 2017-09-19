@@ -1,6 +1,7 @@
 package com.company;
 
 /**
+ * isFriends method determines whether two strings are friends.
  * Created by marvindo on 9/15/17.
  */
 public class DetermineFriends {
