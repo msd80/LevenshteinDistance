@@ -15,7 +15,7 @@ public class DetermineFriends {
     public static boolean isFriends(String first, String second) {
         // Check if it's the same string
         if (first.equals(second)) {
-            System.out.println("It's the same word");
+            //System.out.println("It's the same word");
             return false;
         }
         // Same length, checks to see if it requires only one replacement
@@ -32,7 +32,7 @@ public class DetermineFriends {
             return isOneCharReplacement(second, first);
         }
 
-        System.out.println(first + " is not friends with" + " " + second);
+        //System.out.println(first + " is not friends with" + " " + second);
         return false;
     }
 
@@ -44,18 +44,17 @@ public class DetermineFriends {
      */
     private static boolean isOneCharReplacement(String first, String second) {
         boolean foundDifference = false;
-        for (int i = 0; i < first.length(); i ++) {
-            if (first.charAt(i) != first.charAt(i)) {
+        for (int i = 0; i < first.length(); i++) {
+            if (first.charAt(i) != second.charAt(i)) {
 
                 // Found another different char after previously finding one
                 if (foundDifference) {
                     return false;
                 }
-
                 foundDifference = true;
             }
         }
-        System.out.println(first + " is friends with " + second);
+        //System.out.println(first + " is friends with " + second);
         return true;
     }
 
@@ -66,7 +65,6 @@ public class DetermineFriends {
      * @return
      */
     private static boolean isOneCharAddition(String first, String second) {
-        boolean foundDifference = false;
         int firstIndex = 0;
         int secondIndex = 0;
 
@@ -74,26 +72,23 @@ public class DetermineFriends {
             // Found difference
             if (first.charAt(firstIndex) != second.charAt(secondIndex)) {
                 // If already found difference before
-                if (foundDifference) {
+                if (firstIndex != secondIndex) {
                     return false;
                 }
                 secondIndex++;
-            }
-
-            else {
+            } else {
                 firstIndex++;
                 secondIndex++;
             }
         }
-        System.out.println(first + " is friends with " + second);
+        //System.out.println(first + " is friends with " + second);
         return true;
     }
 
     //To Test
      public static void main(String[] args) {
-     isFriends("HE", "HER");
+     System.out.println(isFriends("LISTY", "LITCHI"));
      System.out.println("\n");
-     isFriends("HE", "HERE");
      }
 
 }
