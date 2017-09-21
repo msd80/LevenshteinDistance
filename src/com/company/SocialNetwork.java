@@ -1,8 +1,9 @@
 package com.company;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
+ * SocialNetwork takes in a dictionary textfile and finds the network size from the desired string
+ * by calling findNetworkSize(String source);
  * Assumptions: There are no duplicates in the dictionary
  *              All of the words in the dictionary are capitalized
  * Created by marvindo on 9/15/17.
@@ -12,67 +13,144 @@ public class SocialNetwork {
     // Fields/Variable
     private ArrayList<String> dictionary;
 
+    private ArrayList<String> edited_dictionary;        // edited dictionary used in findNetworkSize
+    private int tempCount;                              // counter during traversal
+
+    /**
+     * Constructor for SocialNetwork.
+     * Sorts the desired dictionary in ascending string length order by calling ReadDictionary.
+     * @param filePath
+     */
     public SocialNetwork(String filePath) {
         dictionary = new ReadDictionary(filePath).getDictionary();
     }
 
 
-    public int findNetworkSize(String source) {
-        //Removes input string itself from the dictionary to avoid loops
-        ArrayList<String> dictionary_to_traverse = dictionary;
-        dictionary_to_traverse.remove(dictionary_to_traverse.indexOf(source));
-
-        // We include the additional 1 to the size to account for source.
-        return 1 + recursiveFriendNetwork(source, dictionary_to_traverse);
-    }
-
-
-    /*
-    Two strings cannot be direct friends if it is two or more direct length away from each other.
+    /**
+     * Traverses through the dictionary and finds friends of friends of source until there is no connection
+     * @param string_source     the string that user wants to find the network size of
+     * @return                  size of the string's network
      */
-    private int recursiveFriendNetwork(String source, ArrayList<String> dictionary_to_traverse) {
+    public int findNetworkSize(String string_source) {
+
+        Friend_Network source = new Friend_Network(string_source);
+        edited_dictionary = dictionary;
+        edited_dictionary.remove(string_source);
+        this.tempCount = 1;
+
+        traversal_add_network(source);
+
+        return tempCount;
+    }
+
+    /**
+     * Adds the appropriate list of friends to the source and traverses through the list of source's friends
+     * @param source            Friend_Network source to traverse and edit its list of friends
+     */
+    private void traversal_add_network(Friend_Network source) {
         int index = 0;
-        LinkedList<String> isFriends = new LinkedList<String>();
-        // Update index so it starts from length - 1 of source
-        while (dictionary_to_traverse.get(index).length() < source.length() - 1) {
+        //System.out.println("Currently traversing " + source.source);
+
+        while (edited_dictionary.get(index).length() < source.getSourceLength() - 1 &&
+                index < edited_dictionary.size()) {
             index++;
         }
-        while (dictionary_to_traverse.get(index).length() < source.length() + 2 &&
-                index < dictionary_to_traverse.size()) {
 
-            //If they are friends
-            if( DetermineFriends.isFriends(source, dictionary_to_traverse.get(index)) ) {
-                // add it to the isFriends list
-                isFriends.add(dictionary_to_traverse.remove(index));
+        // Traverse from source's length - 1 to source' length + 1
+        // A string can only be friends if it is at most one length apart
+        while ( index < edited_dictionary.size() &&
+                edited_dictionary.get(index).length() < (source.getSourceLength() + 2) ) {
+
+            // Determine if two strings are friends
+            if (DetermineFriends.isFriends(source.toString(), edited_dictionary.get(index)) ) {
+
+                source.addFriend(edited_dictionary.get(index) );
 
             }
             index++;
         }
+        // Removes list of friends from the temp dictionary
+        remove_from_dictionary(source.friends_of_source);
 
-        /*********************
-        Tail recursive
-         *********************/
-        if (isFriends.isEmpty()) {
-            return 0;
+        // Traversal
+        if (source.isEmpty()) return;
+
+        for (Friend_Network friend : source.friends_of_source) {
+            this.tempCount++;
+            traversal_add_network(friend);
         }
-        else {
-            //Iterate through the isFriends to find their friends as well.
-            int friend_network = isFriends.size();
-            for (int i = 0; i < isFriends.size(); i++) {
-                int friendPointer = recursiveFriendNetwork(isFriends.get(i), dictionary_to_traverse);
 
-                friend_network += friendPointer;
-            }
-            return friend_network;
+    }
+
+    /**
+     * To avoid error of adding the same friend multiple times, temporarily removes list of friends from dictionary.
+     * @param network_of_friends    network of friends to remove from dictionary
+     */
+    private void remove_from_dictionary(ArrayList<Friend_Network> network_of_friends) {
+        for(Friend_Network friend : network_of_friends) {
+            edited_dictionary.remove(friend.toString());
         }
     }
 
+    /**
+     * Friend_Network inner class takes in a source (Friend) and acts as a parent
+     * for friends that the source is connected with
+     */
+    class Friend_Network {
 
+        // Variables/Fields
+        private String source;                                      // String source
+        private ArrayList<Friend_Network> friends_of_source;        // List of friends to the source
+
+        /**
+         * Initialize source to create a Friend's Network node
+         * @param source
+         */
+        public Friend_Network(String source) {
+            this.source = source;
+            friends_of_source = new ArrayList<Friend_Network>();
+        }
+
+        /**
+         * Initializes Friend_Network class for toAdd string and adds to list of friends of source
+         * @param toAdd         string to add to the list of friends of source
+         */
+        public void addFriend(String toAdd) {
+            //Instantiate new node for toAdd
+            Friend_Network to_add = new Friend_Network(toAdd);
+            friends_of_source.add(to_add);
+        }
+
+        /**
+         * @return              returns boolean of list of friends
+         */
+        public boolean isEmpty() {
+            return friends_of_source.isEmpty();
+        }
+
+        /**
+         * Getter Method
+         * @return              returns length of source string
+         */
+        public int getSourceLength() {
+            return this.source.length();
+        }
+
+        /**
+         * Override toString to return source string
+         * @return              returns string of source
+         */
+        @Override
+        public String toString() {
+            return this.source;
+        }
+
+    }
 
     // For Testing
     public static void main(String[] args) {
-        SocialNetwork network = new SocialNetwork("example.txt");
-        System.out.println(network.findNetworkSize("HI"));
+        SocialNetwork network = new SocialNetwork("dictionary.txt");
+        System.out.println(network.findNetworkSize("LISTY"));
     }
 
 }

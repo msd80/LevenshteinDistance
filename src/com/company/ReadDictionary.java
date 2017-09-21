@@ -8,15 +8,20 @@ import java.util.Collections;
 
 /**
  * Initializing a ReadDictionary reads the text file to put all String value
- * into an ArrayList in ascending String length.
+ * into an ArrayList in ascending string length.
  * Created by marvindo on 9/15/17.
  */
 class ReadDictionary {
 
-    private String path;
-    private ArrayList<String> dictionary;
+    // Variables/Field
+    private String path;                        // dictionary text file string name
+    private ArrayList<String> dictionary;       // Sorted dictionary as an ArrayList
 
-    // Constructor
+    /**
+     * Calls FileReader and BufferedReader to iterate through the textfile
+     * Places the string values in an ArrayList in ascending string length order.
+     * @param filePath                          text file to open
+     */
     public ReadDictionary(String filePath) {
         path = filePath;
         dictionary = new ArrayList<String>();
@@ -25,10 +30,14 @@ class ReadDictionary {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        // Override String compare method to sort ArrayList
+
         Collections.sort(dictionary, (o1, o2) -> Integer.compare(o1.length(), o2.length()));
     }
 
+    /**
+     * openFile calls FileReader and BufferedReader and iterates through each line and adds to the dictionary
+     * @throws IOException
+     */
     private void openFile() throws IOException {
         FileReader fileReader = new FileReader(path);
         BufferedReader textReader = new BufferedReader(fileReader);
@@ -42,8 +51,9 @@ class ReadDictionary {
 
     }
 
-    /*
-    Necessary getter/setter method
+    /**
+     * Getter Method
+     * @return          dictionary arraylist
      */
     public ArrayList<String> getDictionary() {
         return dictionary;

@@ -7,10 +7,10 @@ package com.company;
 public class DetermineFriends {
 
     /**
-     * Verifies the length of both strings and call isOneCharReplacement or isOneCharAddition
-     * @param first
-     * @param second
-     * @return
+     * Verifies the length of both strings and call isOneCharReplacement or isOneCharAddition to determine if friends
+     * @param first         string to compare
+     * @param second        string to compare to first
+     * @return              if one char different in same length or one length apart, return true, else false
      */
     public static boolean isFriends(String first, String second) {
         // Check if it's the same string
@@ -37,10 +37,10 @@ public class DetermineFriends {
     }
 
     /**
-     * Assuming two strings are of same length, iterates through both strings to find the difference
+     * Assuming two strings are of same length, iterates through both strings to find one char difference
      * @param first
      * @param second
-     * @return
+     * @return if only one char difference, return true, else return false
      */
     private static boolean isOneCharReplacement(String first, String second) {
         boolean foundDifference = false;
@@ -60,9 +60,9 @@ public class DetermineFriends {
 
     /**
      * determine if second string only requires one char addition to match with first
-     * @param first - larger than second by length of 1
+     * @param first          larger than second by length of 1
      * @param second
-     * @return
+     * @return               return true if missing one char somewhere in the second string, else return false
      */
     private static boolean isOneCharAddition(String first, String second) {
         int firstIndex = 0;
