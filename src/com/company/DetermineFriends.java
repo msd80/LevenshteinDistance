@@ -13,8 +13,8 @@ public class DetermineFriends {
      * @return              if one char different in same length or one length apart, return true, else false
      */
     public static boolean isFriends(String first, String second) {
-        // Check if it's the same string
-        if (first.equals(second)) {
+        // Check if it's the same string, and if empty string for first and second
+        if (first.equals(second) || first.length() == 0 || second.length() == 0) {
             //System.out.println("It's the same word");
             return false;
         }
@@ -22,14 +22,13 @@ public class DetermineFriends {
         if (first.length() == second.length()) {
             return isOneCharReplacement(first, second);
         }
-        // One length apart, checks to see if adding a char will make it equal
+        // second string has a greater length, determine if first string is one char away from second
         if (first.length() + 1 == second.length()) {
             return isOneCharAddition(first, second);
         }
-        // One length apart, checks to see if adding a char will make it equal
-        // Switched parameters
+        // first string has a greater length, determine if second string is one char away from first
         if (first.length() - 1 == second.length()) {
-            return isOneCharReplacement(second, first);
+            return isOneCharAddition(second, first);
         }
 
         //System.out.println(first + " is not friends with" + " " + second);
@@ -87,8 +86,7 @@ public class DetermineFriends {
 
     //To Test
      public static void main(String[] args) {
-     System.out.println(isFriends("LISTY", "LITCHI"));
-     System.out.println("\n");
+     System.out.println(isFriends("TEAST", "TEST"));
      }
 
 }
