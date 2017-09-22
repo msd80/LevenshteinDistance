@@ -11,8 +11,6 @@ import java.util.ArrayList;
 public class SocialNetwork {
 
     // Fields/Variable
-    private ArrayList<String> dictionary;
-
     private ArrayList<String> edited_dictionary;        // edited dictionary used in findNetworkSize
     private int tempCount;                              // counter during traversal
 
@@ -22,7 +20,7 @@ public class SocialNetwork {
      * @param filePath
      */
     public SocialNetwork(String filePath) {
-        dictionary = new ReadDictionary(filePath).getDictionary();
+        edited_dictionary = new ReadDictionary(filePath).getDictionary();
     }
 
 
@@ -34,7 +32,6 @@ public class SocialNetwork {
     public int findNetworkSize(String string_source) {
 
         Friend_Network source = new Friend_Network(string_source);
-        edited_dictionary = dictionary;
         edited_dictionary.remove(string_source);
         this.tempCount = 1;
 
@@ -48,7 +45,7 @@ public class SocialNetwork {
      * @param source            Friend_Network source to traverse and edit its list of friends
      */
     private void traversal_add_network(Friend_Network source) {
-        int index = 0;
+        int index;
         //System.out.println("Currently traversing " + source.source);
 
         /*
@@ -215,8 +212,9 @@ public class SocialNetwork {
 
     // For Testing
     public static void main(String[] args) {
-        SocialNetwork network = new SocialNetwork("dictionary.txt");
-        System.out.println(network.findNetworkSize("LISTY"));
+        SocialNetwork network = new SocialNetwork("example.txt");
+        System.out.println(network.findNetworkSize("HEAR"));
+        System.out.println(network.findNetworkSize("HI"));
     }
 
 }

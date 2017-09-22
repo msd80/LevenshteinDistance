@@ -12,11 +12,15 @@ import java.util.ArrayList;
 public class SocialNetworkTest {
 
     @Test
-    public void testSimpleDictionary() {
+    public void testSimpleDictionary1() {
         SocialNetwork network = new SocialNetwork("example.txt");
         Assert.assertEquals(network.findNetworkSize("HI"), 7);
-     //   Assert.assertEquals(network.findNetworkSize("HEAR"), 7);
-        Assert.assertEquals(network.findNetworkSize("HALLOW"), 1);
+    }
+
+    @Test
+    public void testSimpleDictionary2() {
+        SocialNetwork network = new SocialNetwork("example.txt");
+        Assert.assertEquals(network.findNetworkSize("HEAR"), 7);
     }
 
     @Test
