@@ -215,8 +215,8 @@ public class SocialNetwork {
 
     // For Testing
     public static void main(String[] args) {
-        SocialNetwork network = new SocialNetwork("example.txt");
-        System.out.println(network.findNetworkSize("HALLOW"));
+        SocialNetwork network = new SocialNetwork("dictionary.txt");
+        System.out.println(network.findNetworkSize("LISTY"));
     }
 
 }
