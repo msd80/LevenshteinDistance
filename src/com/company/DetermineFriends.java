@@ -13,7 +13,7 @@ public class DetermineFriends {
      * @return              if one char different in same length or one length apart, return true, else false
      */
     public static boolean isFriends(String first, String second) {
-        // Check if it's the same string, and if empty string for first and second
+        // Check if it's the same string, and if empty string for   first and second
         if (first.equals(second) || first.length() == 0 || second.length() == 0) {
             //System.out.println("It's the same word");
             return false;

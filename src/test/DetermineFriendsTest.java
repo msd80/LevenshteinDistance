@@ -60,19 +60,30 @@ public class DetermineFriendsTest {
 
     @Test
     public void testIsFriendsFirstCase() {
-
+        String empty = "";
+        String test = "TEST";
+        Assert.assertFalse(DetermineFriends.isFriends(empty, empty));
+        Assert.assertFalse(DetermineFriends.isFriends(empty, test));
+        Assert.assertFalse(DetermineFriends.isFriends(test, empty));
     }
     @Test
     public void testIsFriendsSecondCase() {
-
+        String test1 = "TESTDICTIONARY";
+        String test2 = "TESTDICTIONARI";
+        String test3 = "TESDDICTIONARI";
+        Assert.assertTrue(DetermineFriends.isFriends(test1, test2));
+        Assert.assertFalse(DetermineFriends.isFriends(test1, test3));
     }
     @Test
-    public void testIsFriendsThirdCase() {
+    public void testIsFriendsThirdAndFourthCase() {
+        String test1 = "TESTDICTIONARY";
+        String test2 = "TESTDICTIONAR";
+        String test3 = "TESTDICTINOAR";
+        Assert.assertTrue(DetermineFriends.isFriends(test1, test2));
+        Assert.assertTrue(DetermineFriends.isFriends(test2, test1));
 
-    }
-    @Test
-    public void testIsFriendsFourthCase() {
-
+        Assert.assertFalse(DetermineFriends.isFriends(test1, test3));
+        Assert.assertFalse(DetermineFriends.isFriends(test3, test1));
     }
 
 }

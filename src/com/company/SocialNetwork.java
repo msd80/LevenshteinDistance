@@ -51,10 +51,14 @@ public class SocialNetwork {
         int index = 0;
         //System.out.println("Currently traversing " + source.source);
 
+        /*
         while (edited_dictionary.get(index).length() < source.getSourceLength() - 1 &&
                 index < edited_dictionary.size()) {
             index++;
-        }
+        }*/
+
+        //Binary Search to get appropriate index
+        index = firstIndexBinarySearch(source.getSourceLength());
 
         // Traverse from source's length - 1 to source' length + 1
         // A string can only be friends if it is at most one length apart
@@ -78,6 +82,68 @@ public class SocialNetwork {
         for (Friend_Network friend : source.friends_of_source) {
             this.tempCount++;
             traversal_add_network(friend);
+        }
+
+    }
+
+    /**
+     * Because we are using the Levenshtein distance, we only need to look at the strings
+     * that are length - 1, length, and length + 1.
+     * If binarySearch for length - 1 doesn't exist, calls for length, and so on.
+     * @param length_value
+     * @return                      If no strings that are Levenshtein distance apart, returns -1
+     *                              else returns binarySearch(length_value) after shifting k values to the left.
+     */
+    private int firstIndexBinarySearch(int length_value) {
+        int binaryIndex = dictionaryBinarySearch(length_value - 1, 0, edited_dictionary.size());
+
+        // If strings that are length_value - 1 of length does not exist.
+        if (binaryIndex == -1) {
+            binaryIndex = dictionaryBinarySearch(length_value, 0, edited_dictionary.size());
+
+            // If strings that are length_value of length does not exist.
+            if (binaryIndex == -1) {
+                binaryIndex = dictionaryBinarySearch(length_value+1, 0, edited_dictionary.size());
+            }
+        }
+
+        // If no strings that are Levenshtein distance apart exists.
+        if (binaryIndex == -1) {
+            return edited_dictionary.size() - 1;
+        }
+
+        // Shifts index left by k value so that the resulting index represents
+        // the first index that has the same length.
+        while (binaryIndex != 0 &&
+                edited_dictionary.get(binaryIndex).length() == edited_dictionary.get(binaryIndex - 1).length()) {
+            binaryIndex--;
+        }
+
+        return binaryIndex;
+    }
+
+    /**
+     * Binary search function
+     * @param length_value          desired string length to find
+     * @param left                  start index value
+     * @param right                 end index value
+     * @return                      Returns the index of a string that has the length of length_value
+     */
+    private int dictionaryBinarySearch(int length_value, int left, int right) {
+
+        if (left > right) {
+            return -1;                  // if no string with length_value exists, return -1
+        }
+
+        int middle = left + (right - left) / 2;
+        if (edited_dictionary.get(middle).length() == length_value) {
+            return middle;
+        }
+        else if (edited_dictionary.get(middle).length() > length_value) {
+            return dictionaryBinarySearch(length_value, left, middle - 1);
+        }
+        else {
+            return dictionaryBinarySearch(length_value, middle + 1, right);
         }
 
     }
@@ -149,8 +215,8 @@ public class SocialNetwork {
 
     // For Testing
     public static void main(String[] args) {
-        SocialNetwork network = new SocialNetwork("dictionary.txt");
-        System.out.println(network.findNetworkSize("LISTY"));
+        SocialNetwork network = new SocialNetwork("example.txt");
+        System.out.println(network.findNetworkSize("HALLOW"));
     }
 
 }
