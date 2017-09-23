@@ -24,9 +24,27 @@ public class SocialNetworkTest {
     }
 
     @Test
+    public void testOneWordDictionary() {
+        SocialNetwork network = new SocialNetwork("empty.txt");
+        Assert.assertEquals(network.findNetworkSize("HI"), 1);
+    }
+
+    @Test
     public void testVerySmallTestDictionary() {
         SocialNetwork network = new SocialNetwork("very_small_test_dictionary.txt");
         Assert.assertEquals(network.findNetworkSize("LISTY"), 5);
+    }
+
+    @Test
+    public void testVerySmallTest2Dictionary() {
+        SocialNetwork network = new SocialNetwork("very_small_test_dictionary.txt");
+        Assert.assertEquals(network.findNetworkSize("FIST"), 5);
+    }
+
+    @Test
+    public void testVerySmallTest3Dictionary() {
+        SocialNetwork network = new SocialNetwork("very_small_test_dictionary.txt");
+        Assert.assertEquals(network.findNetworkSize("LUSTY"), 5);
     }
 
 }

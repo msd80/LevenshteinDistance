@@ -33,6 +33,8 @@ public class SocialNetwork {
 
         Friend_Network source = new Friend_Network(string_source);
         edited_dictionary.remove(string_source);
+        if (edited_dictionary.isEmpty()) return 1;
+
         this.tempCount = 1;
 
         traversal_add_network(source);
