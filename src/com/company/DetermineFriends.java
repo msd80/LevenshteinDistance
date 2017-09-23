@@ -84,9 +84,4 @@ public class DetermineFriends {
         return true;
     }
 
-    //To Test
-     public static void main(String[] args) {
-     System.out.println(isFriends("TEAST", "TEST"));
-     }
-
 }

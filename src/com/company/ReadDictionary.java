@@ -20,7 +20,7 @@ class ReadDictionary {
     /**
      * Calls FileReader and BufferedReader to iterate through the textfile
      * Places the string values in an ArrayList in ascending string length order.
-     * @param filePath                          text file to open
+     * @param filePath                    text file to open
      */
     public ReadDictionary(String filePath) {
         path = filePath;
@@ -59,12 +59,13 @@ class ReadDictionary {
         return dictionary;
     }
 
-    //Testing
+
+    /**
     public static void main(String[] args) {
         ReadDictionary readSmallDictionary = new ReadDictionary("very_small_test_dictionary.txt");
         ArrayList<String> smallDictionary = readSmallDictionary.getDictionary();
         for (int i = 0; i < smallDictionary.size(); i++) {
             System.out.println(smallDictionary.get(i));
         }
-    }
+    } */
 }

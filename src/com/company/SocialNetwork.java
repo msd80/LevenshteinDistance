@@ -2,7 +2,7 @@ package com.company;
 import java.util.ArrayList;
 
 /**
- * SocialNetwork takes in a dictionary textfile and finds the network size from the desired string
+ * SocialNetwork takes in a dictionary text file and finds the network size from the desired string
  * by calling findNetworkSize(String source);
  * Assumptions: There are no duplicates in the dictionary
  *              All of the words in the dictionary are capitalized
@@ -212,11 +212,11 @@ public class SocialNetwork {
 
     }
 
-    // For Testing
     public static void main(String[] args) {
         SocialNetwork network = new SocialNetwork("example.txt");
-        System.out.println(network.findNetworkSize("HEAR"));
-        System.out.println(network.findNetworkSize("HI"));
+        String find_network_of = "HI";
+        System.out.println("The string, " + find_network_of + ", has a network size of: " +
+                network.findNetworkSize(find_network_of));
     }
 
 }

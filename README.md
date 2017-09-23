@@ -18,12 +18,16 @@ The solution to the problem above is broken down into three sections: DetermineF
 and SocialNetwork.
 
 The ReadDictionary essentially takes in a text file that contains the list of words and sorts them in ascending
-string length order and puts them into an ArrayList. SocialNetwork takes the sorted ArrayList and can call the
+string length order into an ArrayList. SocialNetwork takes the sorted ArrayList and can call the
 findNetworkSize(String string_source) to determine the network size of string_source from the corresponding
 dictionary. The process begins by creating a Node called Friend_Network that contains the source String as well
 as an empty List of Friend_Network. It then calls on binary search to figure out the index of the first string
 that has the length of length - 1 (Because according to Levenshtein distance, a string can only be considered
 a friend if it is at most 1 char length apart). After discovering the index, loops through the dictionary to add
-appropriate Strings to the List of Friend_Network of source. Once completed, calls on traverse again on its list
-of Friend_Network until list results in empty. The resulting tree of nodes is then added up to return the size of
-the source's network.
+appropriate Strings to the List of Friend_Network of source. Traverse on its list of Friend_Network until list
+results in an empty list. The resulting tree of nodes is then added up to return the size of the source's network.
+
+How to Use
+----------
+Put the desired dictionary name in the input of the main method in SocialNetwork class as well as the desired string
+to find the network size of and compile.
